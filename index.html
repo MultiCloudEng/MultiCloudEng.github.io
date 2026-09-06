@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asadbek Bozorov — Cloud & DevOps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEF1F4;
+    --paper-panel:#F8F9FB;
+    --ink:#1B2733;
+    --ink-soft:#4A5A68;
+    --line:#C3CCD4;
+    --line-soft:#DCE2E7;
+    --copper:#B5651D;
+    --copper-soft:#E8C9A8;
+    --teal:#2F6F6B;
+    --status:#3E8A5C;
+    --max:760px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Sans 3', sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--ink);
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  a{color:var(--copper);}
+  code, .mono{
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  .spine{
+    position:fixed;
+    top:0; bottom:0; left:32px;
+    width:1px;
+    background:var(--line);
+    z-index:0;
+  }
+  @media (max-width:640px){ .spine{ left:18px; } }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 28px 0 68px;
+    position:relative;
+    z-index:1;
+  }
+  @media (max-width:640px){ .wrap{ padding:0 20px 0 40px; } }
+
+  header.hero{
+    padding:88px 0 64px;
+  }
+  .kicker{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-bottom:28px;
+  }
+  .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--status);
+    box-shadow:0 0 0 3px rgba(62,138,92,0.15);
+    flex-shrink:0;
+  }
+  h1.name{
+    font-size:clamp(32px, 5vw, 44px);
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  .role-line{
+    font-size:clamp(20px, 3vw, 25px);
+    font-weight:500;
+    color:var(--ink);
+    margin-bottom:18px;
+    max-width:520px;
+    line-height:1.35;
+  }
+  .lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:480px;
+    margin-bottom:36px;
+  }
+
+  .terminal{
+    background:#1B2733;
+    border-radius:6px;
+    padding:20px 22px;
+    margin-bottom:36px;
+    max-width:560px;
+    box-shadow:0 12px 32px -16px rgba(27,39,51,0.35);
+  }
+  .terminal-bar{
+    display:flex;
+    gap:6px;
+    margin-bottom:14px;
+  }
+  .terminal-bar span{
+    width:9px; height:9px; border-radius:50%;
+    background:#3A4A5A;
+  }
+  .terminal pre{
+    margin:0;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13.5px;
+    line-height:1.7;
+    color:#D7DEE5;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .terminal .p{ color:#8AAFC4; }
+  .terminal .err{ color:#D98A5E; }
+  .terminal .ok{ color:#7FB88F; }
+  .cursor{
+    display:inline-block;
+    width:7px; height:14px;
+    background:#D7DEE5;
+    margin-left:2px;
+    vertical-align:-2px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .cta-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-block;
+    padding:11px 20px;
+    border-radius:4px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:15px;
+    border:1px solid transparent;
+  }
+  .btn-primary{
+    background:var(--copper);
+    color:#fff;
+  }
+  .btn-ghost{
+    border-color:var(--line);
+    color:var(--ink);
+  }
+
+  section{
+    padding:56px 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .section-head{
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+  }
+  h2.section-title{
+    font-size:26px;
+    font-weight:600;
+    margin-bottom:20px;
+  }
+
+  #about p{
+    max-width:620px;
+    color:var(--ink);
+  }
+  #about p + p{ margin-top:16px; }
+
+  .skill-group{
+    display:grid;
+    grid-template-columns:170px 1fr;
+    gap:6px 24px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .skill-group:last-child{ border-bottom:none; }
+  .skill-group dt{
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--ink);
+  }
+  .skill-group dd{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:15.5px;
+  }
+  @media (max-width:600px){
+    .skill-group{ grid-template-columns:1fr; gap:4px; }
+  }
+
+  .project{
+    position:relative;
+    padding:22px 24px 22px 22px;
+    margin-bottom:18px;
+    background:var(--paper-panel);
+    border:1px solid var(--line-soft);
+    border-left:3px solid var(--copper);
+    border-radius:2px;
+  }
+  .project h3{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .project .stack{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    margin-bottom:10px;
+  }
+  .project p{
+    margin:0 0 10px;
+    color:var(--ink-soft);
+    font-size:15.5px;
+  }
+  .project a.repo{
+    font-size:14px;
+    font-weight:600;
+    text-decoration:none;
+  }
+
+  .learning-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+  .learning-list li{
+    display:flex;
+    gap:12px;
+    padding:9px 0;
+    color:var(--ink-soft);
+    font-size:15.5px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .learning-list li:last-child{ border-bottom:none; }
+  .learning-list .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--copper);
+    flex-shrink:0;
+    padding-top:2px;
+  }
+
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px 24px;
+    max-width:560px;
+  }
+  @media (max-width:520px){ .contact-grid{ grid-template-columns:1fr; } }
+  .contact-item .label{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-bottom:3px;
+  }
+  .contact-item .value{
+    font-size:15.5px;
+    font-weight:600;
+  }
+  .contact-item a{
+    text-decoration:none;
+    color:var(--ink);
+  }
+  .contact-item a:hover{ color:var(--copper); }
+
+  footer{
+    padding:40px 0 60px;
+    color:var(--ink-soft);
+    font-size:13.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="spine"></div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker"><span class="dot"></span> Open to Werkstudent, Praktikum &amp; internship roles — Germany and nearby countries</div>
+    <h1 class="name">Asadbek Bozorov</h1>
+    <p class="role-line">I build infrastructure myself, mistakes included.</p>
+    <p class="lede">Computer Science student in Potsdam, teaching myself cloud and DevOps engineering one real server at a time — no tutorials copied, every script written and debugged by hand.</p>
+
+    <div class="terminal">
+      <div class="terminal-bar"><span></span><span></span><span></span></div>
+      <pre id="termOut"></pre>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">See the projects</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="section-head">About</div>
+    <p>I'm in my 5th semester of Computer Science at the University of Europe for Applied Sciences in Potsdam. Since August I've been running a self-directed, project-based curriculum in cloud and DevOps engineering — Linux, Git, Docker, AWS, networking, and now Terraform — with one rule: I write every line myself, so I can explain any of it, not just run it.</p>
+    <p>That means the projects below include the real errors I hit along the way — a mistyped flag, a locked-down IAM policy that correctly refused to let me start a server, a port nobody was listening on. I'd rather show the debugging than hide it.</p>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">What I work with</div>
+    <dl>
+      <div class="skill-group">
+        <dt>Cloud / AWS</dt>
+        <dd>EC2, IAM (least-privilege policies), VPC (subnets, CIDR, Availability Zones), Elastic Load Balancer, Auto Scaling, S3, Lambda, RDS, Elastic Beanstalk, CloudWatch</dd>
+      </div>
+      <div class="skill-group">
+        <dt>Automation</dt>
+        <dd>Python (boto3, error handling with try/except), Bash scripting — conditionals, loops, functions, log parsing with pipes</dd>
+      </div>
+      <div class="skill-group">
+        <dt>DevOps &amp; containers</dt>
+        <dd>Docker (Dockerfiles, image builds, full container lifecycle), Git &amp; GitHub, currently learning Terraform and CI/CD</dd>
+      </div>
+      <div class="skill-group">
+        <dt>Networking</dt>
+        <dd>TCP/IP, DNS resolution, HTTP/HTTPS, Security Groups, firewall configuration (ufw), packet inspection with tcpdump</dd>
+      </div>
+      <div class="skill-group">
+        <dt>Linux</dt>
+        <dd>File permissions, systemd services, nginx configuration, server provisioning and health-check automation</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section id="projects">
+    <div class="section-head">Projects</div>
+
+    <div class="project">
+      <h3>Linux server provisioning &amp; health monitoring</h3>
+      <div class="stack">bash · aws ec2 · nginx · ufw</div>
+      <p>A provisioning script that takes a bare Ubuntu server to a configured, firewalled web server in one run — system updates, nginx, UFW rules, custom homepage. A companion script reports disk, memory, and service status on demand.</p>
+      <a class="repo" href="https://github.com/MultiCloudEng/linux-server-provisioning" target="_blank" rel="noopener">github.com/MultiCloudEng/linux-server-provisioning</a>
+    </div>
+
+    <div class="project">
+      <h3>Docker containerization practice</h3>
+      <div class="stack">docker · nginx</div>
+      <p>Dockerfiles written from scratch to containerize a custom nginx server, with the full image/container lifecycle managed by hand — build, run, exec, logs, stop. I went looking inside the running container's nginx config to find out why a file path mattered, instead of just memorizing it.</p>
+      <a class="repo" href="https://github.com/MultiCloudEng/docker-nginx-practice" target="_blank" rel="noopener">github.com/MultiCloudEng/docker-nginx-practice</a>
+    </div>
+
+    <div class="project">
+      <h3>AWS automation with Python &amp; boto3</h3>
+      <div class="stack">python · boto3 · iam · ec2</div>
+      <p>A least-privilege IAM user, configured and then tested against itself: a script tries to stop an EC2 instance, gets a real <code>UnauthorizedOperation</code>, and handles it with try/except instead of crashing. Built to understand access boundaries by hitting them, not just reading about them.</p>
+    </div>
+
+    <div class="project">
+      <h3>Linux &amp; bash scripting toolkit</h3>
+      <div class="stack">bash · git</div>
+      <p>A working set of scripts covering argument validation, conditionals, loops, and nginx log analysis — piping <code>sort</code> and <code>uniq -c</code> together to count repeat visitors correctly, which only works once you understand why order matters.</p>
+      <a class="repo" href="https://github.com/MultiCloudEng/linux-bash-scripts" target="_blank" rel="noopener">github.com/MultiCloudEng/linux-bash-scripts</a>
+    </div>
+
+    <div class="project">
+      <h3>Highly available cloud web application — university team project</h3>
+      <div class="stack">aws ec2 · rds · elastic beanstalk · vpc · elastic load balancer · auto scaling</div>
+      <p>Designed and deployed a multi-tier web app with an EC2-hosted app, an RDS-managed database, and Elastic Beanstalk for scaling — including a custom VPC with public/private subnets and security groups, an Elastic Load Balancer to distribute traffic, and Auto Scaling to handle load.</p>
+    </div>
+
+    <div class="project">
+      <h3>StockVision &amp; stock movement prediction</h3>
+      <div class="stack">javascript · chart.js · python · scikit-learn</div>
+      <p>A live stock-market visualization app, plus a Random Forest classifier trained to predict price movement at roughly 71% accuracy.</p>
+      <a class="repo" href="https://multicloudeng.github.io/stockvision" target="_blank" rel="noopener">multicloudeng.github.io/stockvision</a>
+    </div>
+  </section>
+
+  <section id="learning">
+    <div class="section-head">Right now</div>
+    <ul class="learning-list">
+      <li><span class="tag">next</span> Terraform — describing infrastructure as code instead of clicking through the console</li>
+      <li><span class="tag">next</span> GitHub Actions &amp; CI/CD — automating the build-test-deploy loop</li>
+      <li><span class="tag">soon</span> Kubernetes — the layer above containers I haven't touched yet</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <div class="section-head">Get in touch</div>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="label">Email</div>
+        <div class="value"><a href="mailto:asadbek.private@gmail.com">asadbek.private@gmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="label">Phone</div>
+        <div class="value"><a href="tel:+491763233876">+49 176 3233 8786</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="label">GitHub</div>
+        <div class="value"><a href="https://github.com/MultiCloudEng" target="_blank" rel="noopener">MultiCloudEng</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="label">LinkedIn</div>
+        <div class="value"><a href="https://linkedin.com/in/asadbek-bozorov-a0b298348" target="_blank" rel="noopener">asadbek-bozorov</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="label">Location</div>
+        <div class="value">Berlin, Germany</div>
+      </div>
+      <div class="contact-item">
+        <div class="label">Looking for</div>
+        <div class="value">Werkstudent, Praktikum &amp; internships</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Built by hand, like everything else here.
+  </footer>
+
+</div>
+
+<script>
+  const lines = [
+    { t: "$ ssh -i week-1.pem ubuntu@ec2-instance", cls: "" },
+    { t: "$ sudo docker build -t practice .", cls: "" },
+    { t: "  Successfully built &amp; tagged practice:latest", cls: "ok" },
+    { t: "$ python3 stop-instances.py", cls: "" },
+    { t: "  UnauthorizedOperation: not authorized to perform ec2:StopInstances", cls: "err" },
+    { t: "  # fixed the IAM policy, retried", cls: "p" },
+    { t: "$ python3 stop-instances.py", cls: "" },
+    { t: "  Stopping instance: i-068b8900... stopping", cls: "ok" },
+  ];
+
+  const out = document.getElementById('termOut');
+  let li = 0, ci = 0;
+
+  function typeLine(){
+    if(li >= lines.length){
+      out.innerHTML += '<span class="cursor"></span>';
+      return;
+    }
+    const line = lines[li];
+    const raw = line.t.replace(/&amp;/g,'&');
+    if(ci === 0){
+      out.innerHTML += '<span class="'+line.cls+'"></span>';
+    }
+    const spans = out.querySelectorAll('span:not(.cursor)');
+    const current = spans[spans.length-1];
+    current.textContent = raw.slice(0, ci+1);
+
+    ci++;
+    if(ci >= raw.length){
+      out.innerHTML += '\n';
+      li++; ci = 0;
+      setTimeout(typeLine, 140);
+    } else {
+      setTimeout(typeLine, 14);
+    }
+  }
+  typeLine();
+</script>
+
+</body>
+</html>
