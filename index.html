@@ -228,6 +228,26 @@
     color:var(--ink-soft);
     font-size:15.5px;
   }
+  .project.featured{
+    border-left-width:5px;
+    background:#fff;
+  }
+  .badge{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--copper);
+    border:1px solid var(--copper-soft);
+    border-radius:3px;
+    padding:1px 7px;
+    margin-bottom:8px;
+  }
+  .project ul{
+    margin:0 0 10px;
+    padding-left:20px;
+    color:var(--ink-soft);
+    font-size:15.5px;
+  }
   .project a.repo{
     font-size:14px;
     font-weight:600;
@@ -323,11 +343,11 @@
       </div>
       <div class="skill-group">
         <dt>Automation</dt>
-        <dd>Python (boto3, error handling with try/except), Bash scripting — conditionals, loops, functions, log parsing with pipes</dd>
+        <dd>Python (boto3, FastAPI, pytest), Bash scripting — strict mode, error traps, idempotent provisioning, log parsing with pipes</dd>
       </div>
       <div class="skill-group">
         <dt>DevOps &amp; containers</dt>
-        <dd>Docker (Dockerfiles, image builds, full container lifecycle), Git &amp; GitHub, currently learning Terraform and CI/CD</dd>
+        <dd>Terraform (modules, remote state with locking, tests), GitHub Actions CI/CD (plan &rarr; approval &rarr; apply, OIDC to AWS), Docker (non-root images, health checks), Git &amp; GitHub</dd>
       </div>
       <div class="skill-group">
         <dt>Networking</dt>
@@ -342,6 +362,27 @@
 
   <section id="projects">
     <div class="section-head">Projects</div>
+
+    <div class="project featured">
+      <span class="badge">featured</span>
+      <h3>Self-healing AWS infrastructure with Terraform &amp; CI/CD</h3>
+      <div class="stack">terraform · aws ec2 · auto scaling · ssm · s3 · github actions · oidc</div>
+      <p>Two services on EC2, each in an Auto Scaling Group that replaces failed instances automatically. I terminated a live instance and the ASG activity log shows the replacement being launched (screenshot in the repo).</p>
+      <ul>
+        <li>No SSH and no inbound ports: admin access through AWS Systems Manager Session Manager, IMDSv2 required, encrypted volumes</li>
+        <li>Pipeline: format, validate, offline tests and Checkov on every pull request; on <code>main</code> a saved plan is reviewed, approved and then exactly that plan is applied</li>
+        <li>GitHub OIDC instead of stored AWS keys, with separately scoped plan and apply roles</li>
+        <li>State in a versioned, encrypted, private S3 bucket with locking, managed by a separate bootstrap configuration</li>
+      </ul>
+      <a class="repo" href="https://github.com/MultiCloudEng/aws-terraform-infrastructure" target="_blank" rel="noopener">github.com/MultiCloudEng/aws-terraform-infrastructure</a>
+    </div>
+
+    <div class="project">
+      <h3>Authentication backend (REST API)</h3>
+      <div class="stack">python · fastapi · sqlalchemy · jwt · bcrypt · pytest</div>
+      <p>Registration and login with bcrypt password hashing, JWT access tokens and admin-only endpoints. Configuration comes only from environment variables, login does not reveal whether an account exists, and 20 automated tests cover authentication and authorization.</p>
+      <a class="repo" href="https://github.com/MultiCloudEng/fastapi-auth-backend" target="_blank" rel="noopener">github.com/MultiCloudEng/fastapi-auth-backend</a>
+    </div>
 
     <div class="project">
       <h3>Linux server provisioning &amp; health monitoring</h3>
@@ -360,7 +401,8 @@
     <div class="project">
       <h3>AWS automation with Python &amp; boto3</h3>
       <div class="stack">python · boto3 · iam · ec2</div>
-      <p>A least-privilege IAM user, configured and then tested against itself: a script tries to stop an EC2 instance, gets a real <code>UnauthorizedOperation</code>, and handles it with try/except instead of crashing. Built to understand access boundaries by hitting them, not just reading about them.</p>
+      <p>A least-privilege IAM user, configured and then tested against itself: a script tries to stop an EC2 instance, gets a real <code>UnauthorizedOperation</code>, and handles it with try/except instead of crashing. Now a small CLI with pagination, <code>--dry-run</code> permission checks and confirmation before stopping.</p>
+      <a class="repo" href="https://github.com/MultiCloudEng/boto3-practice" target="_blank" rel="noopener">github.com/MultiCloudEng/boto3-practice</a>
     </div>
 
     <div class="project">
@@ -380,15 +422,14 @@
       <h3>StockVision &amp; stock movement prediction</h3>
       <div class="stack">javascript · chart.js · python · scikit-learn</div>
       <p>A live stock-market visualization app, plus a Random Forest classifier trained to predict price movement at roughly 71% accuracy.</p>
-      <a class="repo" href="https://multicloudeng.github.io/stockvision" target="_blank" rel="noopener">multicloudeng.github.io/stockvision</a>
     </div>
   </section>
 
   <section id="learning">
     <div class="section-head">Right now</div>
     <ul class="learning-list">
-      <li><span class="tag">next</span> Terraform — describing infrastructure as code instead of clicking through the console</li>
-      <li><span class="tag">next</span> GitHub Actions &amp; CI/CD — automating the build-test-deploy loop</li>
+      <li><span class="tag">next</span> Load balancer with HTTP health checks for the self-healing project, so a crashed application is detected, not just a dead instance</li>
+      <li><span class="tag">next</span> AWS Certified Cloud Practitioner exam</li>
       <li><span class="tag">soon</span> Kubernetes — the layer above containers I haven't touched yet</li>
     </ul>
   </section>
@@ -402,7 +443,7 @@
       </div>
       <div class="contact-item">
         <div class="label">Phone</div>
-        <div class="value"><a href="tel:+491763233876">+49 176 3233 8786</a></div>
+        <div class="value"><a href="tel:+4917632338786">+49 176 3233 8786</a></div>
       </div>
       <div class="contact-item">
         <div class="label">GitHub</div>
@@ -410,7 +451,7 @@
       </div>
       <div class="contact-item">
         <div class="label">LinkedIn</div>
-        <div class="value"><a href="https://linkedin.com/in/asadbek-bozorov-a0b298348" target="_blank" rel="noopener">asadbek-bozorov</a></div>
+        <div class="value"><a href="https://www.linkedin.com/in/asadbek-bozorov-5447ba434" target="_blank" rel="noopener">asadbek-bozorov</a></div>
       </div>
       <div class="contact-item">
         <div class="label">Location</div>
