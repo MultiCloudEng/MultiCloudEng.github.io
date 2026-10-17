@@ -312,10 +312,10 @@
 <div class="wrap">
 
   <header class="hero">
-    <div class="kicker"><span class="dot"></span> Open to Werkstudent, Praktikum &amp; internship roles — Germany and nearby countries</div>
+    <div class="kicker"><span class="dot"></span> Open to IT Support &amp; DevOps Werkstudent roles in Berlin</div>
     <h1 class="name">Asadbek Bozorov</h1>
     <p class="role-line">I build infrastructure myself, mistakes included.</p>
-    <p class="lede">Computer Science student in Potsdam, teaching myself cloud and DevOps engineering one real server at a time — no tutorials copied, every script written and debugged by hand.</p>
+    <p class="lede">Software Engineering student in Berlin with hands-on IT support experience, teaching myself cloud and DevOps engineering one real server at a time — every script written and debugged by hand.</p>
 
     <div class="terminal">
       <div class="terminal-bar"><span></span><span></span><span></span></div>
@@ -330,13 +330,17 @@
 
   <section id="about">
     <div class="section-head">About</div>
-    <p>I'm in my 5th semester of Computer Science at the University of Europe for Applied Sciences in Potsdam. Since August I've been running a self-directed, project-based curriculum in cloud and DevOps engineering — Linux, Git, Docker, AWS, networking, and now Terraform — with one rule: I write every line myself, so I can explain any of it, not just run it.</p>
+    <p>I study Software Engineering at the University of Europe for Applied Sciences in Potsdam. Alongside my studies I support people with their devices — this year I set up and maintained Windows and macOS machines as a volunteer at a university in Uzbekistan — and I run a self-directed, project-based curriculum in cloud and DevOps engineering: Linux, Git, Docker, AWS, networking, Terraform and CI/CD. One rule: I write every line myself, so I can explain any of it, not just run it.</p>
     <p>That means the projects below include the real errors I hit along the way — a mistyped flag, a locked-down IAM policy that correctly refused to let me start a server, a port nobody was listening on. I'd rather show the debugging than hide it.</p>
   </section>
 
   <section id="skills">
     <div class="section-head">What I work with</div>
     <dl>
+      <div class="skill-group">
+        <dt>IT support</dt>
+        <dd>Windows and macOS device setup, OS and software installation, virtual machines, antivirus maintenance, Wi-Fi/Ethernet troubleshooting, helping users with everyday issues</dd>
+      </div>
       <div class="skill-group">
         <dt>Cloud / AWS</dt>
         <dd>EC2, IAM (least-privilege policies), VPC (subnets, CIDR, Availability Zones), Elastic Load Balancer, Auto Scaling, S3, Lambda, RDS, Elastic Beanstalk, CloudWatch</dd>
@@ -357,7 +361,24 @@
         <dt>Linux</dt>
         <dd>File permissions, systemd services, nginx configuration, server provisioning and health-check automation</dd>
       </div>
+      <div class="skill-group">
+        <dt>Tools &amp; AI</dt>
+        <dd>Microsoft Office (Word, PowerPoint), Microsoft Teams, Agile/Scrum basics, ChatGPT, Claude, Cursor, LLM APIs</dd>
+      </div>
     </dl>
+  </section>
+
+  <section id="experience">
+    <div class="section-head">Experience</div>
+    <div class="project">
+      <h3>Volunteer IT Support — University of Economics and Pedagogy, Karshi, Uzbekistan</h3>
+      <div class="stack">apr–may 2026 · aug 2026 · windows · macos · networking</div>
+      <ul>
+        <li>Installed Windows, virtual machines and software on staff and lab computers; helped maintain antivirus protection</li>
+        <li>Set up macOS devices for staff with productivity and AI tools (ChatGPT, Claude, Cursor), including migrating user data between them</li>
+        <li>Configured Wi-Fi and Ethernet connections and solved everyday hardware and software issues for staff</li>
+      </ul>
+    </div>
   </section>
 
   <section id="projects">
@@ -379,22 +400,35 @@
 
     <div class="project">
       <h3>Authentication backend (REST API)</h3>
-      <div class="stack">python · fastapi · sqlalchemy · jwt · bcrypt · pytest</div>
-      <p>Registration and login with bcrypt password hashing, JWT access tokens and admin-only endpoints. Configuration comes only from environment variables, login does not reveal whether an account exists, and 20 automated tests cover authentication and authorization.</p>
+      <div class="stack">python · fastapi · sqlalchemy · postgresql · jwt · bcrypt · pytest · render</div>
+      <p>Registration and login with bcrypt password hashing, JWT access tokens and admin-only endpoints, deployed live with a managed PostgreSQL database. Configuration comes only from environment variables and the app refuses to start without a strong secret key.</p>
+      <ul>
+        <li>Brute-force protection: login rate limiting per email and per IP, with a <code>Retry-After</code> header</li>
+        <li>Login does not reveal whether an account exists, and takes the same time either way</li>
+        <li>29 automated tests run in GitHub Actions on every push</li>
+      </ul>
+      <a class="repo" href="https://fastapi-auth-backend-4ip1.onrender.com/docs" target="_blank" rel="noopener">Live API docs (first load can take ~50 s)</a><br>
       <a class="repo" href="https://github.com/MultiCloudEng/fastapi-auth-backend" target="_blank" rel="noopener">github.com/MultiCloudEng/fastapi-auth-backend</a>
+    </div>
+
+    <div class="project">
+      <h3>Lumen — AI coaching web app</h3>
+      <div class="stack">javascript · claude api · pwa · github pages</div>
+      <p>A personal web app with six AI coaches (sleep, training, nutrition, study, mind and a life coach) powered by a large language model API, plus progress tracking, quizzes and streaks. It installs on a phone like a native app, and all user data stays on the device.</p>
+      <a class="repo" href="https://multicloudeng.github.io/Lumen/" target="_blank" rel="noopener">multicloudeng.github.io/Lumen</a>
     </div>
 
     <div class="project">
       <h3>Linux server provisioning &amp; health monitoring</h3>
       <div class="stack">bash · aws ec2 · nginx · ufw</div>
-      <p>A provisioning script that takes a bare Ubuntu server to a configured, firewalled web server in one run — system updates, nginx, UFW rules, custom homepage. A companion script reports disk, memory, and service status on demand.</p>
+      <p>A provisioning script that takes a bare Ubuntu server to a configured, firewalled web server in one run — system updates, nginx, UFW rules, custom homepage. A companion script reports disk, memory, and service status on demand. ShellCheck checks every script in CI.</p>
       <a class="repo" href="https://github.com/MultiCloudEng/linux-server-provisioning" target="_blank" rel="noopener">github.com/MultiCloudEng/linux-server-provisioning</a>
     </div>
 
     <div class="project">
       <h3>Docker containerization practice</h3>
       <div class="stack">docker · nginx</div>
-      <p>Dockerfiles written from scratch to containerize a custom nginx server, with the full image/container lifecycle managed by hand — build, run, exec, logs, stop. I went looking inside the running container's nginx config to find out why a file path mattered, instead of just memorizing it.</p>
+      <p>Dockerfiles written from scratch to containerize a custom nginx server, now hardened: a non-root image, a custom config, a health-check endpoint, and Dockerfile linting plus a smoke test in CI. I went looking inside the running container's nginx config to find out why a file path mattered, instead of just memorizing it.</p>
       <a class="repo" href="https://github.com/MultiCloudEng/docker-nginx-practice" target="_blank" rel="noopener">github.com/MultiCloudEng/docker-nginx-practice</a>
     </div>
 
@@ -428,9 +462,10 @@
   <section id="learning">
     <div class="section-head">Right now</div>
     <ul class="learning-list">
-      <li><span class="tag">next</span> Load balancer with HTTP health checks for the self-healing project, so a crashed application is detected, not just a dead instance</li>
+      <li><span class="tag">now</span> Containerizing the FastAPI backend with Docker and docker-compose (app + PostgreSQL), image built in CI</li>
+      <li><span class="tag">next</span> Monitoring with Prometheus and Grafana: metrics, a dashboard and an alert for the API</li>
       <li><span class="tag">next</span> AWS Certified Cloud Practitioner exam</li>
-      <li><span class="tag">soon</span> Kubernetes — the layer above containers I haven't touched yet</li>
+      <li><span class="tag">soon</span> Kubernetes — deploying the same API to a local cluster</li>
     </ul>
   </section>
 
@@ -459,7 +494,7 @@
       </div>
       <div class="contact-item">
         <div class="label">Looking for</div>
-        <div class="value">Werkstudent, Praktikum &amp; internships</div>
+        <div class="value">IT Support &amp; DevOps Werkstudent</div>
       </div>
     </div>
   </section>
